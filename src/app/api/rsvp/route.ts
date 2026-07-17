@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
-import { promises as fs } from 'fs'
-import path from 'path'
+import { initDB, saveRSVP } from '@/lib/neon'
 import { Resend } from 'resend'
 
 function getResend() {
@@ -75,28 +74,8 @@ export async function POST(request: Request) {
       )
     }
 
-    const dataDir = path.join(process.cwd(), 'data')
-    const rsvpsFile = path.join(dataDir, 'rsvps.json')
-
-    try {
-      await fs.mkdir(dataDir, { recursive: true })
-    } catch {
-    }
-
-    let rsvps: unknown[] = []
-    try {
-      const fileContents = await fs.readFile(rsvpsFile, 'utf8')
-      rsvps = JSON.parse(fileContents)
-    } catch {
-    }
-
-    const newRsvp = {
-      ...body,
-      timestamp: new Date().toISOString(),
-    }
-    rsvps.push(newRsvp)
-
-    await fs.writeFile(rsvpsFile, JSON.stringify(rsvps, null, 2))
+    await initDB()
+    await saveRSVP(body)
 
     // Send email notification
     if (process.env.RESEND_API_KEY) {
