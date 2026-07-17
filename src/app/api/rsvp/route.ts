@@ -3,7 +3,10 @@ import { promises as fs } from 'fs'
 import path from 'path'
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY!)
+function getResend() {
+  if (!process.env.RESEND_API_KEY) return null
+  return new Resend(process.env.RESEND_API_KEY)
+}
 
 function formatRsvpEmail(data: {
   name: string
@@ -98,7 +101,7 @@ export async function POST(request: Request) {
     // Send email notification
     if (process.env.RESEND_API_KEY) {
       try {
-        await resend.emails.send({
+        await getResend()!.emails.send({
           from: 'RSVP <rsvp@resend.dev>',
           to: 'maumwangi2@gmail.com',
           subject: `💌 New RSVP from ${body.name}`,
