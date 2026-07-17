@@ -2,20 +2,6 @@ import { neon } from '@neondatabase/serverless'
 
 const sql = neon(process.env.DATABASE_URL!)
 
-export async function initDB() {
-  await sql`
-    CREATE TABLE IF NOT EXISTS rsvps (
-      id SERIAL PRIMARY KEY,
-      name TEXT NOT NULL,
-      phone TEXT DEFAULT '',
-      guests INTEGER DEFAULT 1,
-      attendance TEXT NOT NULL,
-      message TEXT DEFAULT '',
-      timestamp TIMESTAMPTZ DEFAULT NOW()
-    )
-  `
-}
-
 export async function getRSVPs() {
   return sql`SELECT * FROM rsvps ORDER BY timestamp DESC`
 }

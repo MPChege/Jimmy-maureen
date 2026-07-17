@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { initDB, saveRSVP } from '@/lib/neon'
+import { saveRSVP } from '@/lib/neon'
 import { Resend } from 'resend'
 
 function getResend() {
@@ -74,7 +74,6 @@ export async function POST(request: Request) {
       )
     }
 
-    await initDB()
     await saveRSVP(body)
 
     // Send email notification
