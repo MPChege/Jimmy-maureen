@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Calendar, Clock, MapPin, Shirt } from 'lucide-react'
+import { Calendar, Clock, MapPin } from 'lucide-react'
 
 const details = [
   {
@@ -21,12 +21,6 @@ const details = [
     title: 'Venue',
     description: 'Kahawa Sukari, Kericho Road, 3rd Avenue, House 303',
     color: 'from-accent/20 to-transparent',
-  },
-  {
-    icon: Shirt,
-    title: 'Dress Code',
-    description: 'Elegant African Chic',
-    color: 'from-gold/10 to-bronze/10',
   },
 ]
 
@@ -93,7 +87,7 @@ export default function EventDetails() {
           </h2>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
           {details.map((detail, index) => (
             <DetailCard key={detail.title} {...detail} index={index} />
           ))}
