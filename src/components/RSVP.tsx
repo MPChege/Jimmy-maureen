@@ -1,34 +1,31 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import confetti from 'canvas-confetti'
 
-const reactions: Record<string, { emoji: string; title: string; message: string; vibe: 'lit' | 'sad' | 'mid' }> = {
+const reactions: Record<string, { emoji: string; title: string; message: string }> = {
   yes: {
-    emoji: '✨',
-    title: 'Yesss! Let\'s Gooo! 🎉',
-    message: 'Jimmi & Maureen are literally SO excited to have you there! It\'s gonna be giving… love, family, and good vibes only.',
-    vibe: 'lit',
+    emoji: '🎉',
+    title: 'Wonderful!',
+    message: 'Jimmi & Maureen are so excited to have you there! It\'s going to be a day to remember.',
   },
   no: {
-    emoji: '💀',
-    title: 'It\'s Giving… Ghosted 💀',
-    message: 'Bruh. You really hit us with the \'can\'t make it\'? We\'ll still save you a plate tho. No hard feelings… maybe.',
-    vibe: 'sad',
+    emoji: '😢',
+    title: 'We\'ll Miss You',
+    message: 'We\'re sorry you can\'t make it. You\'ll be in our thoughts on the day!',
   },
   maybe: {
     emoji: '🤔',
-    title: 'The Uncertainty is… Uncertain',
-    message: 'A maybe? We see you keeping your options open. No pressure—just know the vibes won\'t be the same without you!',
-    vibe: 'mid',
+    title: 'No Pressure',
+    message: 'Take your time! Just let us know when you can. We\'d love to have you there.',
   },
 }
 
 const attendanceOptions = [
-  { value: 'yes', label: '100% I\'m there', emoji: '🔥', description: 'wouldn\'t miss it for the world' },
-  { value: 'no', label: 'Can\'t make it sorry', emoji: '💀', description: 'it\'s giving… busy schedule' },
-  { value: 'maybe', label: 'Lowkey considering', emoji: '🤔', description: 'let me check my calendar fr' },
+  { value: 'yes', label: 'Yes', emoji: '👍' },
+  { value: 'no', label: 'No', emoji: '👎' },
+  { value: 'maybe', label: 'Maybe', emoji: '🤷' },
 ]
 
 const guestCounts = Array.from({ length: 10 }, (_, i) => i + 1)
@@ -85,38 +82,6 @@ function PopReaction({ type, onClose }: { type: 'yes' | 'no' | 'maybe'; onClose:
         <h3 className="font-heading text-2xl text-cream mb-2">{r.title}</h3>
         <p className="text-cream/50 text-sm font-light leading-relaxed mb-6">{r.message}</p>
 
-        <div className="flex flex-wrap gap-2 justify-center mb-6">
-          {r.vibe === 'lit' && Array.from({ length: 3 }).map((_, i) => (
-            <motion.span
-              key={i}
-              className="text-lg"
-              animate={{ y: [0, -8, 0], opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.2 }}
-            >
-              {['🎉', '✨', '🥳'][i]}
-            </motion.span>
-          ))}
-          {r.vibe === 'sad' && Array.from({ length: 3 }).map((_, i) => (
-            <motion.span
-              key={i}
-              className="text-lg"
-              animate={{ rotate: [0, 15, -15, 0], opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
-            >
-              {['😢', '💔', '🕊️'][i]}
-            </motion.span>
-          ))}
-          {r.vibe === 'mid' && Array.from({ length: 3 }).map((_, i) => (
-            <motion.span
-              key={i}
-              className="text-lg"
-              animate={{ x: [0, 8, -8, 0], opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 2.5, repeat: Infinity, delay: i * 0.25 }}
-            >
-              {['🤷', '⏳', '🧐'][i]}
-            </motion.span>
-          ))}
-        </div>
 
         <motion.button
           onClick={onClose}
@@ -124,7 +89,7 @@ function PopReaction({ type, onClose }: { type: 'yes' | 'no' | 'maybe'; onClose:
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
-          {type === 'yes' ? 'Aight, let\'s go! 🔥' : type === 'no' ? 'I mean… okay 😔' : 'Fair enough 🤷'}
+          {type === 'yes' ? 'Great! 🎉' : type === 'no' ? 'Okay 😔' : 'No worries 🤷'}
         </motion.button>
       </motion.div>
     </motion.div>
@@ -159,7 +124,7 @@ function SuccessAnimation() {
         transition={{ delay: 0.8, duration: 0.5 }}
         className="font-heading text-2xl sm:text-3xl text-cream mb-3"
       >
-        Bet! You&apos;re on the list 🎯
+        Thank You!
       </motion.h3>
 
       <motion.p
@@ -168,7 +133,7 @@ function SuccessAnimation() {
         transition={{ delay: 1, duration: 0.5 }}
         className="text-cream/50 text-sm sm:text-base font-light text-center max-w-sm"
       >
-        We got your response! Jimmi & Maureen are literally counting down the days. See you there bestie!
+        We got your response! Jimmi & Maureen are counting down the days. See you there!
       </motion.p>
 
       <motion.div
@@ -204,10 +169,10 @@ export default function RSVP() {
   const validate = (): boolean => {
     const newErrors: Partial<Record<keyof FormData, string>> = {}
     if (!formData.name.trim()) {
-      newErrors.name = 'Uh oh, we need your name bestie ✨'
+      newErrors.name = 'Please enter your name'
     }
     if (!formData.attendance) {
-      newErrors.attendance = 'C\'mon, yes or no? Don\'t leave us hanging 😅'
+      newErrors.attendance = 'Please select your attendance'
     }
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
@@ -255,11 +220,11 @@ export default function RSVP() {
         }
       } else {
         setIsSubmitting(false)
-        alert('Something went wrong bestie. Try again later! 🙏')
+        alert('Something went wrong. Try again later!')
       }
     } catch {
       setIsSubmitting(false)
-      alert('No internet bestie? Check your connection! 📡')
+      alert('No internet connection. Please try again!')
     }
   }
 
@@ -312,10 +277,10 @@ export default function RSVP() {
             ✦ RSVP ✦
           </motion.p>
           <h2 className="font-heading text-3xl sm:text-5xl text-cream font-light mb-3">
-            You&apos;re Invited Bestie
+            You&apos;re Invited
           </h2>
           <p className="text-cream/30 text-sm font-light max-w-md mx-auto">
-            Drop your deets below before July 25th — don&apos;t keep us hanging fr fr
+            Drop your details below before July 25th
           </p>
         </motion.div>
 
@@ -443,18 +408,13 @@ export default function RSVP() {
                           >
                             {opt.emoji}
                           </motion.span>
-                          <div className="flex-1">
-                            <span
-                              className={`text-sm block ${
-                                isSelected ? 'text-cream' : 'text-cream/50'
-                              }`}
-                            >
-                              {opt.label}
-                            </span>
-                            <span className="text-[10px] text-cream/20 font-light">
-                              {opt.description}
-                            </span>
-                          </div>
+                          <span
+                            className={`text-sm ${
+                              isSelected ? 'text-cream' : 'text-cream/50'
+                            }`}
+                          >
+                            {opt.label}
+                          </span>
                           {isSelected && (
                             <motion.span
                               initial={{ scale: 0 }}
@@ -483,7 +443,7 @@ export default function RSVP() {
 
                 <div>
                   <label className="block text-cream/40 text-xs tracking-[0.15em] uppercase mb-2 font-light">
-                    Message <span className="text-cream/10">(optional, but cute)</span>
+                    Message <span className="text-cream/10">(optional)</span>
                   </label>
                   <div className="relative">
                     <span className="absolute left-4 top-4 text-cream/20 text-sm">💌</span>
@@ -492,7 +452,7 @@ export default function RSVP() {
                       onChange={(e) => updateField('message', e.target.value)}
                       onFocus={() => setFocusedField('message')}
                       onBlur={() => setFocusedField(null)}
-                      placeholder="A special note for Jimmi & Maureen... make it sweet bestie"
+                      placeholder="A special note for Jimmi & Maureen..."
                       rows={3}
                       className={`${baseInputClasses} pl-10 resize-none border-gold/10 ${
                         focusedField === 'message' ? 'border-gold/30 bg-card/80 shadow-lg shadow-gold/5' : ''

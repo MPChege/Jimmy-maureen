@@ -72,20 +72,6 @@ export default function OurStory() {
               <div className="absolute inset-0 bg-gradient-to-t from-background/5 via-transparent to-transparent" />
             </div>
 
-            <motion.div
-              className="absolute -bottom-6 -right-6 w-32 h-32 sm:w-40 sm:h-40 rounded-2xl glass-card flex items-center justify-center"
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.8, duration: 0.6 }}
-            >
-              <div className="text-center">
-                <p className="font-heading text-2xl sm:text-3xl text-gradient-gold">2024</p>
-                <p className="text-[10px] sm:text-xs text-cream/30 tracking-[0.15em] uppercase mt-1">
-                  The Beginning
-                </p>
-              </div>
-            </motion.div>
           </motion.div>
         </div>
       </div>
