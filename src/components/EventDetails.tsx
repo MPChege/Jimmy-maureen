@@ -19,7 +19,7 @@ const details = [
   {
     icon: MapPin,
     title: 'Venue',
-    description: 'Coming Soon',
+    description: 'Kahawa Sukari, Kericho Road, 3rd Avenue, House 303',
     color: 'from-accent/20 to-transparent',
   },
   {

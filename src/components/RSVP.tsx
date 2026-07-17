@@ -23,9 +23,9 @@ const reactions: Record<string, { emoji: string; title: string; message: string 
 }
 
 const attendanceOptions = [
-  { value: 'yes', label: 'Yes', emoji: '👍' },
-  { value: 'no', label: 'No', emoji: '👎' },
-  { value: 'maybe', label: 'Maybe', emoji: '🤷' },
+  { value: 'yes', label: 'Yes' },
+  { value: 'no', label: 'No' },
+  { value: 'maybe', label: 'Maybe' },
 ]
 
 const guestCounts = Array.from({ length: 10 }, (_, i) => i + 1)
@@ -277,10 +277,10 @@ export default function RSVP() {
             ✦ RSVP ✦
           </motion.p>
           <h2 className="font-heading text-3xl sm:text-5xl text-cream font-light mb-3">
-            You&apos;re Invited
+            We Would Be Honored by Your Presence
           </h2>
           <p className="text-cream/30 text-sm font-light max-w-md mx-auto">
-            Drop your details below before July 25th
+            Kindly confirm your attendance by July 25th
           </p>
         </motion.div>
 
@@ -399,15 +399,7 @@ export default function RSVP() {
                               : 'border-gold/5 bg-card/30 text-cream/50 hover:border-gold/15 hover:bg-card/50'
                           }`}
                         >
-                          <motion.span
-                            className={`w-10 h-10 rounded-xl flex items-center justify-center text-lg transition-all ${
-                              isSelected ? 'bg-gold/20 scale-110' : 'bg-card/50'
-                            }`}
-                            animate={isSelected ? { rotate: [0, 10, -10, 0] } : {}}
-                            transition={{ duration: 0.5 }}
-                          >
-                            {opt.emoji}
-                          </motion.span>
+
                           <span
                             className={`text-sm ${
                               isSelected ? 'text-cream' : 'text-cream/50'
